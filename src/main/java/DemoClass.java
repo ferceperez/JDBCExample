@@ -20,22 +20,24 @@ public class DemoClass
         String url = "jdbc:mysql://localhost:3306/jdbcexample";
         String uname = "root";
         String pass = "souless123";
-        String query = "select * from student";
+        String query = "insert into student values (?,?)"; // the ? represents values to be replaced by variables
 
-        Class.forName("com.mysql.cj.jdbc.Driver"); //class forname register the driver
+        int userid = 5;
+        String username = "Lucas"; //values to be inserted
+
+
+
+        Class.forName("com.mysql.cj.jdbc.Driver"); //class.forname register the driver
         Connection con = DriverManager.getConnection(url,uname,pass);//connection
 
-        Statement st = con.createStatement();//create statement
+        PreparedStatement st = con.prepareStatement(query); // we use PreparedStatement to use variables
 
-        ResultSet rs = st.executeQuery(query); //execution of query
+        st.setInt(1,userid);// we let know that in the first column (the value 1) we are going to insert userid
+        st.setString(2,username);// we let know that in the second column (the value 2) we are going to insert username
 
-        String userdData = ""; //here we save the info from the row
+        int count = st.executeUpdate(); // this gives back the number of rows affected
 
-        while (rs.next()) //moves the cursor to show the next row until there is no row left
-        {
-            userdData = rs.getInt(1) + " : " + rs.getString(2); //getint gets the first column and the values are int in the db, the first column is 1
-            System.out.println(userdData);                                            //getString gets the second column and the values are strings in the db, the second column is 2
-        }
+        System.out.println(count + " row/s affected");
 
 
         st.close();
