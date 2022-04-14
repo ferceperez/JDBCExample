@@ -17,7 +17,6 @@ public class DemoClass
 {
     public static void main(String[] args) throws Exception
     {
-
         String url = "jdbc:mysql://localhost:3306/jdbcexample";
         String uname = "root";
         String pass = "souless123";
